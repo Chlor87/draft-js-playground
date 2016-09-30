@@ -1,0 +1,38 @@
+.file-upload {
+  padding: 1rem;
+  min-height: 6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+
+  [type=file] {
+    display: none;
+  }
+
+  .buttons {
+    margin-right: 1rem;
+    [type=button]:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .file-list {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: .25rem .5rem;
+      padding:  5px 10px;
+      color: white;
+      background-color: darkgray;
+      border-radius: 15px;
+    }
+  }
+
+  &.is-over {
+    border: 5px dashed #286090;
+  }
+}

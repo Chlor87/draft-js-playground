@@ -1,0 +1,92 @@
+.editor {
+  cursor: pointer;
+  &[class*="col"] {
+    padding: 1px;
+  }
+  &[class*="row"] {
+    margin: 0;
+  }
+  &[class*="container"] {
+    padding: 0;
+  }
+  position: relative;
+  //padding-top: 2rem;
+  border: 1px solid cyan;
+}
+
+.dragging {
+  opacity: 0;
+  background-color: magenta;
+}
+
+.min-height {
+  min-height: 20rem;
+}
+
+.edit-info {
+  //position: absolute;
+  //top: 0px;
+  //bottom: 0px;
+  //right: 0px;
+  //left: 0px;
+  //border: 1px solid cyan;
+
+  .info {
+    position: relative;
+    width: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: orange;
+    color: white;
+    height: 2rem;
+    //opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+  }
+
+  .small-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 15rem;
+    width: auto;
+    text-align: center;
+    color: white;
+    background-color: orange;
+    border-bottom-right-radius: 5px;
+    font-size: .8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+      padding: 0 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &:hover {
+    //z-index: 10000;
+    & .small-info {
+      display: none;
+    }
+    & .info {
+      display: flex;
+    }
+  }
+}
+
+.is-over {
+  border: 3px dashed limegreen;
+}
+
+.can-drop {
+  border: 3px dashed cyan;
+}

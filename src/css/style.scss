@@ -1,0 +1,51 @@
+@import 'components/editor';
+@import 'components/elementPicker';
+@import 'components/layoutPreview';
+@import 'components/fileUpload';
+@import "components/extendedEditor";
+@import 'components/imageViewer';
+
+.clickable, .panel-heading {
+  cursor: pointer;
+}
+
+.table-h-center {
+  & th, & td {
+    text-align: center;
+  }
+}
+
+.table-v-center {
+  & th, & td {
+    vertical-align: middle!important;
+  }
+}
+
+.icon-button {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 .5rem;
+}
+
+.btn-round {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.autosuggest-token {
+  display: inline-block;
+  background-color: orange;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin: .25rem;
+  .button {
+    margin-left: .5rem;
+    margin-right: 0;
+  }
+}

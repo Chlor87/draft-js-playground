@@ -1,0 +1,27 @@
+.layout-preview {
+  & [class*="col-"], & [class*="row"] {
+    background-clip: content-box;
+  }
+
+  & [class*="col-"] {
+    height: 2.5rem;
+    padding: 0 .5rem;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    background-color: darkgray;
+  }
+  & [class*="row"] {
+    margin: 0;
+    //background-color: lightgray;
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+  }
+  & [class*="container"] {
+    padding: 0;
+  }
+}
