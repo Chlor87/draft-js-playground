@@ -6,13 +6,14 @@ import FA from 'react-fontawesome'
 
 export const InlineStyleControls = props => {
   let {onToggle, editorState} = props,
-      currentStyle = editorState.getCurrentInlineStyle();
+      currentStyle = editorState.getCurrentInlineStyle()
   return (
     <ButtonGroup>
       {
         inlineStyleButtons.map(({style, icon}, idx) => {
           return (
             <Button key={idx}
+                    bsSize="sm"
                     onClick={() => onToggle(style)}
               {...currentStyle.has(style) ? {bsStyle: 'primary'} : {}}>
               <FA name={icon}/>
@@ -30,15 +31,15 @@ const inlineStyleButtons = [
     icon: 'bold'
   },
   {
-    style: 'UNDERLINE',
-    icon: 'underline'
-  },
-  {
     style: 'ITALIC',
     icon: 'italic'
   },
   {
-    style: 'CODE',
-    icon: 'code'
-  }
+    style: 'UNDERLINE',
+    icon: 'underline'
+  },
+  // {
+  //   style: 'CODE',
+  //   icon: 'code'
+  // }
 ]

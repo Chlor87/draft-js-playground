@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
+import {connect} from 'mobx-connect'
+import routes from '../routes'
 
 import {
   Nav as BSNav,
@@ -10,8 +13,9 @@ import {
 import {Link} from 'react-router'
 import {LinkContainer} from 'react-router-bootstrap'
 import FA from 'react-fontawesome'
-import {toJS} from 'mobx'
 
+
+@connect
 export default class Nav extends Component {
 
   state = {
@@ -22,79 +26,91 @@ export default class Nav extends Component {
     this.setState({activeKey})
   }
 
+  /**
+   * set proper activeKey for curr navigation path
+   */
+  componentDidMount() {
+
+    let {props: {location: {pathname}}} = this
+
+    Array.from(ReactDOM.findDOMNode(this.refs.nav).querySelectorAll('[href]')).forEach(elem => {
+      let href = elem.getAttribute('href').substr(1)
+      if (!href) {
+        return
+      }
+      for (let [topIdx, {nav, path: topPath, childRoutes}] of routes.childRoutes.entries()) {
+        if (!nav) {
+          continue
+        }
+        if (childRoutes) {
+          for (let [idx, {nav, path}] of childRoutes.entries()) {
+            if (!nav) {
+              continue
+            }
+            let curr = `${topPath}/${path}`,
+                s = new Set([href, curr, pathname])
+            if (s.size === 1) {
+              this.setState({activeKey: parseFloat(`${topIdx}.${idx}`)})
+            }
+          }
+        } else {
+          if (new Set([href, topPath, pathname]).size === 1) {
+            this.setState({activeKey: parseFloat(topIdx)})
+          }
+        }
+      }
+    })
+  }
+
   render() {
 
     let {
           state: {activeKey},
           onSelect
-          } = this
+        } = this
 
     return (
       <Navbar staticTop inverse>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to='/'>
-              <FA name="home"/>
+              <FA name="home"/>&nbsp;draft-js playground
             </Link>
           </Navbar.Brand>
         </Navbar.Header>
-        <BSNav activeKey={activeKey} onSelect={onSelect}>
-          <NavDropdown title="Pageset" eventKey={1} id="pageset">
-            <LinkContainer to="/pageset/list">
-              <MenuItem eventKey={1.1}>
-                List
-              </MenuItem>
-            </LinkContainer>
-            <LinkContainer to="/pageset/add">
-              <MenuItem eventKey={1.2}>
-                Add...
-              </MenuItem>
-            </LinkContainer>
-          </NavDropdown>
 
-          <NavDropdown title="Custom Elements" eventKey={2}
-                       id="custom-elements">
-            <LinkContainer to="custom-element/list">
-              <MenuItem eventKey={2.1}>
-                List
-              </MenuItem>
-            </LinkContainer>
-
-            <LinkContainer to="custom-element/add">
-              <MenuItem eventKey={2.2}>
-                Add...
-              </MenuItem>
-            </LinkContainer>
-          </NavDropdown>
-
-          <NavDropdown title="Layout" eventKey={3} id="layout">
-            <LinkContainer to="/layout/list">
-              <MenuItem eventKey={3.1}>
-                List
-              </MenuItem>
-            </LinkContainer>
-            <LinkContainer to="/layout/add">
-              <MenuItem eventKey={3.2}>
-                Add...
-              </MenuItem>
-            </LinkContainer>
-          </NavDropdown>
-
-          <NavDropdown title="Theme" eventKey={4} id="theme">
-            <LinkContainer to="theme/list">
-              <MenuItem eventKey={4.1}>
-                List
-              </MenuItem>
-            </LinkContainer>
-            <LinkContainer to="theme/add">
-              <MenuItem eventKey={4.2}>
-                Add...
-              </MenuItem>
-            </LinkContainer>
-          </NavDropdown>
-
-
-
+        <BSNav onSelect={onSelect} activeKey={activeKey} ref="nav">
+          {
+            routes.childRoutes.map(({nav, label, path: topPath, childRoutes}, topIdx) => {
+              if (!nav) {
+                return null
+              }
+              return childRoutes ? (
+                <NavDropdown title={label} eventKey={topIdx} id={label} key={topIdx}>
+                  {
+                    childRoutes.map(({nav, label, path}, idx) => {
+                      if (!nav) {
+                        return null
+                      }
+                      return (
+                        <LinkContainer to={`${topPath}/${path}`} key={idx}>
+                          <MenuItem eventKey={parseFloat(`${topIdx}.${idx}`)}>
+                            {label}
+                          </MenuItem>
+                        </LinkContainer>
+                      )
+                    })
+                  }
+                </NavDropdown>
+              ) : (
+                <LinkContainer to={topPath} key={topIdx}>
+                  <NavItem eventKey={topIdx}>
+                    {label}
+                  </NavItem>
+                </LinkContainer>
+              )
+            })
+          }
         </BSNav>
       </Navbar>
     )
