@@ -6,7 +6,9 @@
   "dependencies": {
     "bootstrap-css-only": "^3.3.6",
     "classnames": "^2.2.5",
-    "draft-js": "^0.8.1",
+    "draft-js": "^0.9.1",
+    "draft-js-multidecorators": "^1.0.0",
+    "draft-js-simpledecorator": "^1.0.1",
     "font-awesome": "^4.6.3",
     "fontawesome": "^4.5.0",
     "history": "^2.1.2",
